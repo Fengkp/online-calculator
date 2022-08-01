@@ -11,6 +11,7 @@ function createNumButtons() {
         btn.setAttribute('id', num);
         btn.classList.add('numberBtn');
         btn.textContent = `${num}`;
+        btn.addEventListener('click', getNumber);
         numbersContainer.appendChild(btn);
     }
 }
@@ -23,5 +24,29 @@ function createResultsBox() {
     resultsContainer.appendChild(resultsLabel);
 }
 
+function getNumber() {
+    numbersClicked.push(this.textContent);
+}
+
+function parseNumber() {
+    let fullNum = "";
+
+    numbersClicked.forEach(num => {
+        fullNum = fullNum.concat(num);
+    });
+    workingNumbers.push(Number(fullNum))
+    numbersClicked = [];
+}
+
+let numbersClicked = [];
+let workingNumbers = [];
 createResultsBox();
 createNumButtons();
+
+const test = document.querySelector('.test');
+test.addEventListener('click', () => {
+    parseNumber();
+    workingNumbers.forEach(num => {
+        console.log(num);
+    })
+})
