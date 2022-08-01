@@ -15,4 +15,13 @@ function createNumButtons() {
     }
 }
 
+function createResultsBox() {
+    const resultsContainer = document.querySelector('.results');
+    const resultsLabel = document.createElement('label');
+    
+    resultsLabel.textContent = 'TEST';
+    resultsContainer.appendChild(resultsLabel);
+}
+
+createResultsBox();
 createNumButtons();
