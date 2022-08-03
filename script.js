@@ -8,7 +8,7 @@ function createNumButtons() {
         if (i == 10)
             num = 0;
 
-        btn.setAttribute('id', num);
+        btn.setAttribute('id', `num-${num}`);
         btn.classList.add('numberBtn');
         btn.textContent = `${num}`;
         btn.addEventListener('click', getNumber);
@@ -18,14 +18,36 @@ function createNumButtons() {
 
 function createResultsBox() {
     const resultsContainer = document.querySelector('.results');
-    const resultsLabel = document.createElement('label');
+    const resultsLabel = document.createElement('h2');
     
-    resultsLabel.textContent = 'TEST';
+    resultsLabel.textContent = '0';
     resultsContainer.appendChild(resultsLabel);
+}
+
+function createOperationButtons() {
+    const operations = ['+', '-', '*', '/', '='];
+    const operationsContainer = document.querySelector('.operations');
+
+    operations.forEach(operation => {
+        const btn = document.createElement('button');
+        btn.setAttribute('id', `op-${operation}`);
+        btn.classList.add('operationBtn');
+        btn.textContent = operation;
+        btn.addEventListener('click', parseNumber);
+        operationsContainer.appendChild(btn);
+    });
 }
 
 function getNumber() {
     numbersClicked.push(this.textContent);
+    displayNumber()
+}
+
+function displayNumber() {
+    const results = document.querySelector('h2');
+    let equation = numbersClicked.join('');
+
+    results.textContent = equation;
 }
 
 function parseNumber() {
@@ -40,13 +62,7 @@ function parseNumber() {
 
 let numbersClicked = [];
 let workingNumbers = [];
+
 createResultsBox();
 createNumButtons();
-
-const test = document.querySelector('.test');
-test.addEventListener('click', () => {
-    parseNumber();
-    workingNumbers.forEach(num => {
-        console.log(num);
-    })
-})
+createOperationButtons();
