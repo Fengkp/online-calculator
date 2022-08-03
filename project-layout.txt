@@ -1,0 +1,12 @@
+Number buttons have to display number on results box as they are click
+- numbers are added to stack
+Operation buttons have to add operation to stack
+- Functions for:
+    - add
+    - subtract
+    - multiply
+    - divide
+Equal button will run stack and perform operation
+Delete button will pop off stack
+Clear button will remove everything from stack
+

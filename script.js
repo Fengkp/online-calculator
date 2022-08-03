@@ -1,68 +1,26 @@
-function createNumButtons() {
-    const numbersContainer = document.querySelector('.numbers');
+function createNumBtns() {
+    const numbers = document.querySelectorAll('.btn-num');
 
-    for (let i = 1; i < 11; i++) {
-        let num = i;
-        const btn = document.createElement('button');
-
-        if (i == 10)
-            num = 0;
-
-        btn.setAttribute('id', `num-${num}`);
-        btn.classList.add('numberBtn');
-        btn.textContent = `${num}`;
-        btn.addEventListener('click', getNumber);
-        numbersContainer.appendChild(btn);
-    }
-}
-
-function createResultsBox() {
-    const resultsContainer = document.querySelector('.results');
-    const resultsLabel = document.createElement('h2');
-    
-    resultsLabel.textContent = '0';
-    resultsContainer.appendChild(resultsLabel);
-}
-
-function createOperationButtons() {
-    const operations = ['+', '-', '*', '/', '='];
-    const operationsContainer = document.querySelector('.operations');
-
-    operations.forEach(operation => {
-        const btn = document.createElement('button');
-        btn.setAttribute('id', `op-${operation}`);
-        btn.classList.add('operationBtn');
-        btn.textContent = operation;
-        btn.addEventListener('click', parseNumber);
-        operationsContainer.appendChild(btn);
+    numbers.forEach(number => {
+        number.addEventListener('click', getNumber);
+        number.addEventListener('click', displayNumber);
     });
 }
 
+
 function getNumber() {
-    numbersClicked.push(this.textContent);
-    displayNumber()
+    queue.push(this.textContent);
 }
 
 function displayNumber() {
     const results = document.querySelector('h2');
-    let equation = numbersClicked.join('');
+    let equation = queue.join('');
 
     results.textContent = equation;
 }
 
-function parseNumber() {
-    let fullNum = "";
+let queue = [];
 
-    numbersClicked.forEach(num => {
-        fullNum = fullNum.concat(num);
-    });
-    workingNumbers.push(Number(fullNum))
-    numbersClicked = [];
-}
 
-let numbersClicked = [];
-let workingNumbers = [];
+createNumBtns();
 
-createResultsBox();
-createNumButtons();
-createOperationButtons();
