@@ -48,7 +48,15 @@ h2 {
     gap: 3px;
 }
 
-.btn-num {
+.operations {
+    display: grid;
+    gap: 3px;
+    margin-left: 10px;
+}
+
+.btn-num,
+.btn-op,
+.equal-btn {
     height: 75px;
     width: 75px;
     background-color: #DEE8D5;
@@ -57,21 +65,15 @@ h2 {
     font-weight: 700;
 }
 
-.operations {
-    display: grid;
-    gap: 3px;
-    margin-left: 10px;
-}
-
-.btn-op {
+.btn-op,
+.equal-btn {
     height: 50px;
     width: 50px;
-    border: 2px solid #D5C7BC;
-    background-color: #DEE8D5;
-    color: #AC92A6;
-    font-weight: 700;
 }
 
+.equal-btn {
+    height: 97px;
+}
 .footer {
     margin-top: auto;
     margin-bottom: 0;
