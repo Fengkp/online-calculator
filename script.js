@@ -1,11 +1,11 @@
-function createNumBtns() {
-    const numbers = document.querySelectorAll('button');
+function addQueueEvent(btnClass) {
+    const buttons = document.querySelectorAll(btnClass);
 
-    numbers.forEach(number => {
-        number.addEventListener('click', (e) => {
+    buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
             queue.push(e.target.textContent);
         });
-        number.addEventListener('click', updateResult);
+        btn.addEventListener('click', updateResult);
     });
 }
 
@@ -15,6 +15,18 @@ function updateResult() {
 
     results.textContent = equation;
 }
+
+function clearResult() {
+    const results = document.querySelector('h2');
+    results.textContent = 0;
+    queue = [];
+}
+
+function backspace() {
+    queue.pop();
+    updateResult();
+}
+
 
 function parseQueue() {
     let num = '';
@@ -93,9 +105,16 @@ function divide(num1, num2) {
 }
 
 function start() {
-    createNumBtns();
-    const equalBtn = document.querySelector('.equal-btn');
+    addQueueEvent('.btn-num');
+    addQueueEvent('.btn-op');
+    addQueueEvent('.btn-equal');
+    const equalBtn = document.querySelector('.btn-equal');
     equalBtn.addEventListener('click', parseQueue);
+    const clearBtn = document.querySelector('.btn-clr');
+    clearBtn.addEventListener('click', clearResult);
+    const delBtn = document.querySelector('.btn-del');
+    delBtn.addEventListener('click', backspace);
 }
 
 let queue = [];
+start();

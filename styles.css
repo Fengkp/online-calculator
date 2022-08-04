@@ -56,7 +56,9 @@ h2 {
 
 .btn-num,
 .btn-op,
-.equal-btn {
+.btn-clr,
+.btn-del,
+.btn-equal {
     height: 75px;
     width: 75px;
     background-color: #DEE8D5;
@@ -66,12 +68,12 @@ h2 {
 }
 
 .btn-op,
-.equal-btn {
+.btn-equal {
     height: 50px;
     width: 50px;
 }
 
-.equal-btn {
+.btn-equal {
     height: 97px;
 }
 .footer {
