@@ -10,3 +10,9 @@ Equal button will run stack and perform operation
 Delete button will pop off stack
 Clear button will remove everything from stack
 
+Operation indexes will always match with number indexes, so if multiply occurs, 
+take the index before and after that operation and apply it to numbers
+then perform the equation
+delete those numbers and operation from the array
+continue until arrays are empty
+SO LONG AS OPERATIONS ARE NOT IN SEPARATE CONTAINER

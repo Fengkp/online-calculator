@@ -2,13 +2,11 @@ function createNumBtns() {
     const numbers = document.querySelectorAll('button');
 
     numbers.forEach(number => {
-        number.addEventListener('click', getNumber);
+        number.addEventListener('click', (e) => {
+            queue.push(e.target.textContent);
+        });
         number.addEventListener('click', updateResult);
     });
-}
-
-function getNumber() {
-    queue.push(this.textContent);
 }
 
 function updateResult() {
@@ -18,41 +16,86 @@ function updateResult() {
     results.textContent = equation;
 }
 
-function add(...nums) {
-    let result = 0;
-
-    nums.forEach(num => {
-        result += num;
-    })
-    return result;
-}
-
 function parseQueue() {
     let num = '';
-    let nums = [];
+    let equation = [];
     let ops = [];
 
     while (queue.length != 0) {
-        if (queue[0].match(/[+\-*\/=]/g)) {
-            nums.push(Number(num));
+        if (queue[0].match(/[+\-*\/=]/)) {
+            equation.push(String(num));
+            ops.push(queue[0]);
             num = '';
-            ops.push(queue.shift());
+            equation.push(queue.shift());
         }
         num += queue.shift();
     }
-    equate(nums, ops);
+    ops.pop();
+    ops = determinePriority(ops);
+    equate(equation, ops);
 }
 
-function equate(nums, ops) {
-    if (ops[0] === '+') 
-        queue.push(add(nums.shift(), nums.shift()));
-    updateResult()
+function determinePriority(ops) {
+    let newOps = [];
+    let opIndex;
+    const priority = /[*\/]/;
+
+    while (ops.length > 0) {
+        opIndex = ops.join('').search(priority)
+        if (opIndex > -1) 
+            newOps.push(ops[opIndex]);
+        else {
+            newOps.push(ops.shift());
+            continue;
+        }
+        ops.splice(opIndex, 1);  
+    }
+    return newOps;
+}
+
+function equate(equation, ops) {
+    let opIndex;
+    let result;
+
+    while(ops.length > 0) {
+        opIndex = equation.indexOf(ops[0]);
+        if (ops[0] === '*') 
+            result = multiply(equation[opIndex - 1], equation[opIndex + 1]);
+        else if (ops[0] === '/') 
+            result = divide(equation[opIndex - 1], equation[opIndex + 1]);
+        else if (ops[0] === '+') 
+            result = add(equation[opIndex - 1], equation[opIndex + 1]);
+        else if (ops[0] === '-')
+            result = subtract(equation[opIndex - 1], equation[opIndex + 1]);
+        ops.shift();
+        equation.splice(opIndex - 1, 3, String(result));
+    }
+    equation.pop();
+    queue = equation;
+    updateResult();
     queue = [];
 }
 
+function add(num1, num2) {
+    return Number(num1) + Number(num2);
+}
+
+function subtract(num1, num2) {
+    return Number(num1) - Number(num2);
+}
+
+function multiply(num1, num2) {
+    return Number(num1) * Number(num2);
+}
+
+function divide(num1, num2) {
+    return Number(num1) / Number(num2);
+}
+
+function start() {
+    createNumBtns();
+    const equalBtn = document.querySelector('.equal-btn');
+    equalBtn.addEventListener('click', parseQueue);
+}
+
 let queue = [];
-
-createNumBtns();
-
-const equalBtn = document.querySelector('.equal-btn');
-equalBtn.addEventListener('click', parseQueue);
